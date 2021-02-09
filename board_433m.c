@@ -5,47 +5,44 @@ void board_433_init(void)
 {
 	GPIO_Init(SDA_PIN,INPUT|PUL_EN);
 }
-void RF_433m_receive_decode(void) //Í¨¹ı¼ÆËãµÍµçÆ½¼ÆËãÊı¾İ
+void RF_433m_receive_decode(void) //é€šè¿‡è®¡ç®—ä½ç”µå¹³è®¡ç®—æ•°æ®
 {
 	static bit f_start=0;
 	static bit f_first_in;
 	static DAT_433 rf_433m;
 	static unsigned char bit_cnt;
-    static unsigned char io_0_timer_cnt;	
+        static unsigned char io_0_timer_cnt;	
 	if(SDA_433==1){
 		if(f_first_in==0){
 		    f_first_in=1;
-			if(f_start==0){      			
-                if(io_0_timer_cnt>BIT_START_MIN&&io_0_timer_cnt<BIT_START_MAX){ //ÆğÊ¼Î»
-					bit_cnt=0;
-					f_start=1;
+	            if(f_start==0){      			
+                        if(io_0_timer_cnt>BIT_START_MIN&&io_0_timer_cnt<BIT_START_MAX){ //èµ·å§‹ä½
+				bit_cnt=0;
+				f_start=1;
 		        }
-				else {   //ËÉ¿ª×´Ì¬
-					 f_start=0;
-					 rf_433m.buff= 0;
-                     rf_key_value=0;					
-					}
+			else {   //æ¾å¼€çŠ¶æ€
+				f_start=0;
+				rf_433m.buff= 0;
+                                rf_key_value=0;					
 			}
-			else{	
+		  }
+		else{	
 		        rf_433m.buff =rf_433m.buff<<1;
-				bit_cnt++;					
-				if(io_0_timer_cnt>BIT_1_CNT_MIN && io_0_timer_cnt<BIT_1_CNT_MAX){ //bitÎ»Îª1
-			       rf_433m.buff ++;								
-		        }
-				else if(io_0_timer_cnt<BIT_0_CNT_MIN && io_0_timer_cnt>BIT_0_CNT_MAX) {//²»ÊÇ·ûºÏ0ºÍ1µÄÊ±¼ä·¶Î§
-					f_start=0;
-					rf_433m.buff&=0xff000000;
-				}
-		        if(bit_cnt==24){
-					f_start=0;
-			       if(rf_433m.value[0]==rf_433m.value[3]) 
-					   rf_key_value= rf_433m.value[3];
+			bit_cnt++;					
+			if(io_0_timer_cnt>BIT_1_CNT_MIN && io_0_timer_cnt<BIT_1_CNT_MAX) rf_433m.buff ++;//å½“å‰æ¯”ç‰¹ä½æ˜¯1.
+			else if(io_0_timer_cnt<BIT_0_CNT_MIN && io_0_timer_cnt>BIT_0_CNT_MAX) {//ä¸æ˜¯ç¬¦åˆ0å’Œ1çš„æ—¶é—´èŒƒå›´
+				f_start=0;
+				rf_433m.buff&=0xff000000;
+			}
+		        if(bit_cnt==24){ 
+				f_start=0;
+			        if(rf_433m.value[0]==rf_433m.value[3])  rf_key_value= rf_433m.value[3];
 			    }			
 			}
 		io_0_timer_cnt=0;
 		}
 	}
-	else{  //¹Ü½ÅÎªµÍµçÆ½
+	else{  //ç®¡è„šä¸ºä½ç”µå¹³
 		io_0_timer_cnt++;
 		f_first_in=0;
 	}
