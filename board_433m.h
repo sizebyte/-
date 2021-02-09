@@ -1,17 +1,17 @@
 #ifndef board_433m_H
 #define board_433m_H
-//************ÅäÖÃ*******************************
-//433MÊı¾İ¹Ü½Å¹Ü½Å
+//************é…ç½®*******************************
+//433Mæ•°æ®ç®¡è„šç®¡è„š
 #define  SDA_PIN  P15F
 #define  SDA_433  P15
-//µçÆ½²ÉÑù´ÎÊı(µçÆ½³ÖĞøÊ±¼ä·¶Î§)
-#define BIT_1_CNT_MIN      6 // 1:400usµÍ+1200us¸ß  ¶¨Ê±Æ÷¶¨Ê±50us
+//ç”µå¹³é‡‡æ ·æ¬¡æ•°(ç”µå¹³æŒç»­æ—¶é—´èŒƒå›´)
+#define BIT_1_CNT_MIN      6 // 1:400usä½+1200usé«˜  å®šæ—¶å™¨å®šæ—¶50us
 #define BIT_1_CNT_MAX      12 //
-#define BIT_0_CNT_MIN      20 //0:1200usµÍ+400us¸ß
+#define BIT_0_CNT_MIN      20 //0:1200usä½+400usé«˜
 #define BIT_0_CNT_MAX      30 //
-#define BIT_START_MIN      240 //ÆğÊ¼Î»£º12160msµÍ 
+#define BIT_START_MIN      240 //èµ·å§‹ä½ï¼š12160msä½ 
 #define BIT_START_MAX      255
-//Ò£¿Ø¼üÖµ
+//é¥æ§é”®å€¼
 #define  KEY0            0x2b
 #define  KEY1            0x1b
 #define  KEY2            0x23
@@ -20,14 +20,14 @@
 #define  KEY5            0x22
 #define  KEY6            0x08
 #define  KEY7            0x09
-extern unsigned char rf_key_value;  //¼üÖµ¶ÁÈ¡½Ó¿Ú
+extern unsigned char rf_key_value;  //é”®å€¼è¯»å–æ¥å£
 //************************************************
 typedef union {
 	unsigned long int buff;
-	unsigned char value[4]; //value[3]:¼üÖµ  value[0]:ÉÏÒ»´Î°´¼ü¼üÖµ
+	unsigned char value[4]; //value[3]:é”®å€¼  value[0]:ä¸Šä¸€æ¬¡æŒ‰é”®é”®å€¼
 }DAT_433;
-void board_433_init(void);//Êı¾İÊäÈë½Å³õÊ¼»¯
-void RF_433m_receive_decode(void); //Í¨¹ı¼ÆËãµÍµçÆ½¼ÆËãÊı¾İ
+void board_433_init(void);//æ•°æ®è¾“å…¥è„šåˆå§‹åŒ–
+void RF_433m_receive_decode(void); //å‡½æ•°æ”¾å…¥å®šæ—¶å™¨ä¸­æ‰«æã€‚è§£ç åŸç†ï¼šé€šè¿‡è®¡ç®—ä½ç”µå¹³è®¡ç®—æ•°æ®
 
 
 
